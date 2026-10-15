@@ -31,3 +31,10 @@ js/gallery.js (lightbox — home page only)
 images/ (workshop-benches[-480|-1400].jpg, course-participant.jpg,
 donated-bikes.jpg, workshop-entrance.jpg)
 README.md
+
+AI Use Declaration
+This project was developed with substantial assistance from chat.z.ai, a generative AI conversational assistant.
+AI was used to draft the HTML, CSS and JavaScript code, the page content, and supporting documentation (README, summary, testing plan).
+My own contribution consisted of selecting and adding the photographic assets, validating and debugging the code with the W3C validators,
+performing all browser, responsive and accessibility testing, and studying the generated code until I could explain every design
+and accessibility decision.
