@@ -2,7 +2,7 @@ Project Title
 Lae Urban Youths Bike Workshop 
 
 Overview
-The final version of the three-page site built in Assessments 2–3: same topic,same audience, same semantic HTML5 skeleton — now with a hand-written designsystem, full responsiveness, and meaningful vanilla JavaScript.
+The final version of the three-page site built in Assessments 2–3: same topic, same audience, same semantic HTML5 skeleton — now with a hand-written design system, full responsiveness, and meaningful vanilla JavaScript.
 
 Purpose & audience
 A volunteer-run community bike workshop needs a site where local riders, parents and budget commuters can find services and prices, check hours, and book a stand or course online. Every feature below maps to one of those tasks.
