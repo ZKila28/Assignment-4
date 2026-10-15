@@ -1,0 +1,1095 @@
+/* ==========================================================================
+   Lae Urban Youths Bike Workshop — Assessment 4 stylesheet
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   01. DESIGN TOKENS
+   A4 change: fill/ink colours are now SEPARATE tokens. In A3 one green did
+   two jobs (button fill AND text); in dark mode those need different values,
+   so: --clr-brand = fills (white text on top), --clr-link/--clr-heading =
+   inks. Every text/background pair below meets WCAG AA in BOTH themes.
+   -------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  /* Palette — light theme */
+  --clr-brand:          #1f6f43;  /* fills: buttons, table head (white text on it) */
+  --clr-brand-deep:     #14512f;  /* deep fill: header/footer bg, hover            */
+  --clr-brand-tint:     #e7f0e9;  /* tint surfaces: tbody th, success panel        */
+  --clr-heading:        #14512f;  /* heading ink: 10.9:1 on white                  */
+  --clr-link:           #1c6b3f;  /* link ink: 6.5:1 on white                      */
+  --clr-accent:         #d97b29;  /* decorative bars only — never body text        */
+  --clr-accent-ink:     #8a4210;  /* accent AS text: 7.3:1 on white                */
+  --clr-surface:        #ffffff;
+  --clr-surface-alt:    #f4f1ea;
+  --clr-zebra:          #faf8f2;
+  --clr-text:           #23231f;
+  --clr-muted:          #5c5c54;  /* 6.7:1 on white                                */
+  --clr-border:         #ddd6c6;
+  --clr-border-strong:  #a49d8b;
+  --clr-danger:         #a33a2a;  /* error ink: 7.4:1 on white                     */
+  --clr-danger-soft:    #fbecea;
+  --clr-on-brand:       #ffffff;
+  --clr-focus:          #14512f;  /* focus ring on light surfaces                  */
+  --clr-focus-on-dark:  #ffd166;  /* focus ring on green surfaces                  */
+  --clr-footer-ink:     #dfe9e1;
+  --clr-footer-link:    #cfe6d8;
+
+  /* Typography */
+  --font-body:    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: Georgia, "Times New Roman", Times, serif;
+  --fs-small: clamp(0.85rem, 0.83rem + 0.1vw, 0.95rem);
+  --fs-body:  clamp(1rem,   0.96rem + 0.25vw, 1.125rem);
+  --fs-lead:  clamp(1.1rem, 1.05rem + 0.4vw, 1.3rem);
+  --fs-h3:    clamp(1.15rem, 1.1rem + 0.35vw, 1.35rem);
+  --fs-h2:    clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --fs-h1:    clamp(2rem,   1.55rem + 2.2vw, 2.9rem);
+  --lh-tight: 1.2;
+  --lh-body:  1.65;
+  --fw-normal: 400;
+  --fw-mid:    600;
+  --fw-bold:   700;
+
+  /* Spacing scale */
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-s:   0.75rem;
+  --space-m:   1rem;
+  --space-l:   1.5rem;
+  --space-xl:  2.25rem;
+  --space-2xl: 3.5rem;
+
+  /* Shape, depth, layout */
+  --radius-2xs: 2px;
+  --radius-sm:  0.3rem;
+  --radius-md:  0.6rem;
+  --radius-lg:  1.1rem;
+  --shadow-sm: 0 1px 3px rgba(35, 35, 31, 0.12);
+  --shadow-md: 0 4px 12px rgba(35, 35, 31, 0.14);
+  --shadow-lg: 0 10px 26px rgba(35, 35, 31, 0.18);
+  --container: 72rem;
+  --measure:   68ch;
+
+  /* Motion */
+  --speed: 160ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   02. RESET & BASE
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1, h2, h3, h4, p,
+figure, blockquote,
+ul, ol,
+fieldset, legend {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+/*
+  FLEXBOX DECISION #1 — sticky footer.
+  body is a flex COLUMN: header / main / footer stack, and main gets
+  flex-grow so short pages still push the footer to the viewport bottom.
+*/
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--clr-surface-alt);
+  color: var(--clr-text);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+
+main {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+[id] {
+  scroll-margin-top: 1.5rem;
+}
+
+/* A4: gentle cross-fade when the theme toggles (killed by §08 reduced-motion) */
+body,
+.page,
+.site-header,
+.site-footer,
+.card,
+.panel,
+fieldset,
+input, select, textarea {
+  transition: background-color var(--speed) ease,
+              color var(--speed) ease,
+              border-color var(--speed) ease;
+}
+
+/* --------------------------------------------------------------------------
+   03. TYPOGRAPHY
+   -------------------------------------------------------------------------- */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  color: var(--clr-heading);
+  line-height: var(--lh-tight);
+  font-weight: var(--fw-bold);
+}
+
+h1 {
+  font-size: var(--fs-h1);
+  margin-block-end: var(--space-s);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  margin-block: var(--space-xl) var(--space-s);
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 0.2rem;
+  margin-top: 0.45rem;
+  border-radius: var(--radius-sm);
+  background: var(--clr-accent);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  margin-block: var(--space-l) var(--space-xs);
+}
+
+p {
+  margin-block-end: var(--space-s);
+  max-width: var(--measure);
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  color: var(--clr-muted);
+  max-width: 60ch;
+  margin-block-end: var(--space-l);
+}
+
+main :where(ul, ol) {
+  padding-left: 1.4rem;
+  margin-block-end: var(--space-m);
+}
+
+main li {
+  margin-block: var(--space-2xs);
+}
+
+main ol li::marker {
+  color: var(--clr-brand);
+  font-weight: var(--fw-bold);
+}
+
+a {
+  color: var(--clr-link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+a:hover {
+  color: var(--clr-heading);
+  text-decoration-thickness: 2px;
+}
+
+address {
+  font-style: normal;
+}
+
+/* --------------------------------------------------------------------------
+   04. LAYOUT
+   -------------------------------------------------------------------------- */
+.container {
+  width: min(100% - 2 * var(--space-m), var(--container));
+  margin-inline: auto;
+}
+
+.page {
+  background: var(--clr-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: clamp(1.25rem, 4vw, 3.5rem);
+  margin-block: var(--space-m) var(--space-2xl);
+}
+
+/*
+  CSS GRID DECISION #1 — .card-grid (auto-fit + minmax).
+  "What we do", "Get involved" and the services jump-nav. Each card is at
+  least 16rem; as many columns as fit are created automatically. Full-width
+  children span 1 / -1.
+*/
+.card-grid {
+  display: grid;
+  gap: var(--space-m);
+}
+
+.card-grid > h2,
+.card-grid > p {
+  grid-column: 1 / -1;
+}
+
+/*
+  CSS GRID DECISION #2 — .media-split (home "Who we are"): text + figure
+  columns; the figure spans the paragraph rows on desktop (3 paragraphs
+  below the h2 → grid-row: 2 / span 3).
+*/
+.media-split {
+  display: grid;
+  gap: var(--space-m) var(--space-l);
+}
+
+/*
+  CSS GRID DECISION #3 — .split (contact): form and info sidebar stack in
+  source order (form first on mobile), become columns at 72em.
+*/
+.split {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.contact-aside {
+  display: grid;
+  gap: var(--space-l);
+}
+
+/* --------------------------------------------------------------------------
+   05. COMPONENTS
+   -------------------------------------------------------------------------- */
+
+/* ---- Skip link ---- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 100;
+  background: var(--clr-brand-deep);
+  color: var(--clr-on-brand);
+  padding: var(--space-xs) var(--space-m);
+  border-radius: 0 0 var(--radius-sm) 0;
+}
+
+.skip-link:focus {
+  left: 0;
+  top: 0;
+}
+
+/* ---- Header & navigation ---- */
+.site-header {
+  background: linear-gradient(160deg, var(--clr-brand), var(--clr-brand-deep));
+  border-bottom: 0.3rem solid var(--clr-accent);
+  padding-block: var(--space-s);
+  color: var(--clr-on-brand);
+}
+
+/*
+  FLEXBOX DECISION #2 — responsive header.
+  Mobile: a WRAPPING flex row — line 1 is brand (pushed left by margin-right:
+  auto) plus the icon buttons; the nav takes flex-basis:100% and wraps onto
+  its own line. Tablet+: `order` re-arranges to brand | nav | controls and
+  the nav joins line 1. One-dimensional placement, exactly what flex is for.
+*/
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs) var(--space-s);
+}
+
+.brand {
+  margin-right: auto;
+}
+
+.brand a {
+  display: flex;              /* flex: icon + text aligned on one axis */
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--clr-on-brand);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: var(--fs-lead);
+  font-weight: var(--fw-bold);
+}
+
+.brand-mark {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  color: var(--clr-accent);
+}
+
+/* A4: theme + menu icon buttons */
+.header-controls {
+  display: flex;
+  gap: var(--space-2xs);
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius-sm);
+  color: var(--clr-on-brand);
+  cursor: pointer;
+  transition: background var(--speed) var(--ease-out);
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.icon-btn svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+/* Theme button shows the icon of the theme you will SWITCH TO */
+.theme-toggle .icon-sun { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+/* Menu button swaps burger → X purely via aria-expanded (no JS icon logic) */
+.nav-toggle .icon-close { display: none; }
+.nav-toggle[aria-expanded="true"] .icon-menu { display: none; }
+.nav-toggle[aria-expanded="true"] .icon-close { display: block; }
+
+.site-nav {
+  flex-basis: 100%;   /* no-JS mobile: nav always visible on its own line (A3) */
+}
+
+.site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2xs);
+  list-style: none;
+}
+
+.site-nav a {
+  display: inline-block;
+  padding: 0.55em 1.1em;
+  border-radius: var(--radius-sm);
+  color: #eaf4ee;
+  text-decoration: none;
+  font-weight: var(--fw-mid);
+}
+
+.site-nav a:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--clr-on-brand);
+}
+
+.site-nav a[aria-current="page"] {
+  background: var(--clr-surface);
+  color: var(--clr-heading);
+}
+
+/* A4: with JS on mobile, the nav is collapsible (aria-expanded drives it) */
+.js .site-nav { display: none; }
+.js .site-nav.is-open { display: block; }
+.js .site-nav.is-open ul {
+  flex-direction: column;
+  align-items: stretch;
+}
+.js .site-nav.is-open a { display: block; }  /* full-width touch targets */
+
+/* no-JS fallbacks: hide interactive controls that need JS to be useful */
+.no-js .nav-toggle { display: none; }
+.no-js .no-js-hide { display: none; }
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-block;
+  padding: 0.7em 1.5em;
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--speed) var(--ease-out),
+              color var(--speed) var(--ease-out);
+}
+
+.btn--primary {
+  background: var(--clr-brand);
+  color: var(--clr-on-brand);
+}
+
+.btn--primary:hover {
+  background: var(--clr-brand-deep);
+  color: var(--clr-on-brand);
+}
+
+.btn--outline {
+  background: transparent;
+  border-color: var(--clr-brand);
+  color: var(--clr-heading);
+}
+
+.btn--outline:hover {
+  background: var(--clr-brand-tint);
+  color: var(--clr-heading);
+}
+
+/* ---- Cards ---- */
+.card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-top: 0.25rem solid var(--clr-brand);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-m) var(--space-l);
+}
+
+.card h3 {
+  margin-block: 0 var(--space-xs);
+}
+
+.card p {
+  font-size: var(--fs-small);
+  color: var(--clr-text);
+  margin-block-end: 0;
+}
+
+.card--link {
+  border-top-color: var(--clr-accent);
+  text-decoration: none;
+  transition: transform var(--speed) var(--ease-out),
+              box-shadow var(--speed) var(--ease-out);
+}
+
+.card--link:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.card--link:hover .card-title {
+  color: var(--clr-accent-ink);
+  text-decoration: underline;
+}
+
+.card-title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h3);
+  color: var(--clr-heading);
+}
+
+.card-desc {
+  display: block;
+  margin-top: var(--space-2xs);
+  font-size: var(--fs-small);
+  color: var(--clr-muted);
+}
+
+.page-contents {
+  margin-block-end: var(--space-l);
+}
+
+/* ---- Panels ---- */
+.panel {
+  background: var(--clr-surface-alt);
+  border: 1px solid var(--clr-border);
+  border-left: 0.35rem solid var(--clr-brand);
+  border-radius: var(--radius-md);
+  padding: var(--space-m) var(--space-l);
+}
+
+.panel--accent {
+  border-left-color: var(--clr-accent);
+}
+
+.panel > :first-child,
+.card > :first-child {
+  margin-block-start: 0;
+}
+
+.panel > :last-child,
+.card > :last-child {
+  margin-block-end: 0;
+}
+
+/* ---- Figures & media ---- */
+figure {
+  margin-block: var(--space-m) var(--space-l);
+}
+
+figure img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--clr-border);
+  box-shadow: var(--shadow-sm);
+}
+
+figcaption {
+  margin-top: var(--space-xs);
+  font-size: var(--fs-small);
+  font-style: italic;
+  color: var(--clr-muted);
+}
+
+/* ---- Tables ---- */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  margin-block: var(--space-m) var(--space-l);
+}
+
+.table-wrap table {
+  width: 100%;
+  min-width: 38rem;
+  border-collapse: collapse;
+}
+
+caption {
+  text-align: left;
+  font-weight: var(--fw-bold);
+  color: var(--clr-heading);
+  padding: var(--space-xs) var(--space-s);
+}
+
+th,
+td {
+  border: 1px solid var(--clr-border);
+  padding: 0.55em 0.8em;
+  text-align: left;
+  vertical-align: top;
+}
+
+thead th {
+  background: var(--clr-brand);
+  color: var(--clr-on-brand);
+}
+
+tbody th {
+  background: var(--clr-brand-tint);
+}
+
+tbody tr:nth-child(even) td {
+  background: var(--clr-zebra);
+}
+
+/* ---- A4: course filter (services.html) ---- */
+.filter-box {
+  background: var(--clr-surface-alt);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-s) var(--space-m);
+  margin-block-end: var(--space-m);
+}
+
+.filter-box label {
+  display: block;
+  font-weight: var(--fw-bold);
+  margin-block-end: var(--space-2xs);
+}
+
+.filter-box input {
+  width: 100%;
+  max-width: 26rem;
+  padding: 0.55em 0.75em;
+  border: 1px solid var(--clr-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--clr-surface);
+}
+
+.filter-status {
+  min-height: 1.6em;      /* stops layout jump as text changes */
+  margin-block: var(--space-2xs) 0;
+  font-size: var(--fs-small);
+  color: var(--clr-muted);
+}
+
+/* ---- Forms ---- */
+fieldset {
+  border: 1px solid var(--clr-border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-s) var(--space-m) var(--space-m);
+  margin-block-end: var(--space-l);
+}
+
+legend {
+  font-weight: var(--fw-bold);
+  color: var(--clr-heading);
+  padding-inline: var(--space-2xs);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="search"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.55em 0.75em;
+  border: 1px solid var(--clr-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--clr-surface);
+}
+
+textarea {
+  resize: vertical;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  accent-color: var(--clr-brand);
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* FLEXBOX DECISION #3 — checkbox/radio rows keep the control aligned with
+   the first line of a multi-line label on one axis. */
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  margin-block: var(--space-xs);
+}
+
+.option input {
+  margin-top: 0.3em;
+}
+
+.option label {
+  font-weight: var(--fw-normal);
+}
+
+label {
+  display: block;
+  font-weight: var(--fw-bold);
+  margin-block-end: var(--space-2xs);
+}
+
+.hint {
+  display: block;
+  margin-top: var(--space-2xs);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-normal);
+  color: var(--clr-muted);
+}
+
+/* A4: form feedback states. Errors are never colour-alone: every message
+   begins with the word "Error:" and is listed in the error summary. */
+.field-error {
+  display: block;
+  margin-top: var(--space-2xs);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-mid);
+  color: var(--clr-danger);
+}
+
+[aria-invalid="true"] {
+  border: 2px solid var(--clr-danger);
+}
+
+:user-invalid {
+  border: 2px solid var(--clr-danger);
+}
+
+.error-summary {
+  background: var(--clr-danger-soft);
+  border: 2px solid var(--clr-danger);
+  border-radius: var(--radius-md);
+  padding: var(--space-s) var(--space-l);
+  margin-block-end: var(--space-l);
+}
+
+.error-summary h3 {
+  color: var(--clr-danger);
+  margin-block: var(--space-xs);
+}
+
+.error-summary a {
+  color: var(--clr-danger);
+  font-weight: var(--fw-mid);
+}
+
+.form-success {
+  background: var(--clr-brand-tint);
+  border: 2px solid var(--clr-brand);
+  border-radius: var(--radius-md);
+  padding: var(--space-m) var(--space-l);
+  margin-block: var(--space-l);
+}
+
+.form-success h3 {
+  color: var(--clr-heading);
+  margin-block: var(--space-xs);
+}
+
+.form-success-note {
+  color: var(--clr-muted);
+  font-size: var(--fs-small);
+}
+
+.form-success .btn {
+  margin-top: var(--space-2xs);
+}
+
+.char-count {
+  display: block;
+  margin-top: var(--space-2xs);
+  font-size: var(--fs-small);
+  color: var(--clr-muted);
+}
+
+/* ---- A4: gallery + lightbox ---- */
+/*
+  CSS GRID DECISION #4 — .gallery-grid: auto-fit/minmax thumbnails, same
+  fluid pattern as the card grids (1-col mobile → 4-col desktop).
+*/
+.gallery-grid {
+  display: grid;
+  gap: var(--space-m);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  list-style: none;
+  padding: 0;
+  margin-block: var(--space-m) var(--space-l);
+}
+
+.gallery-thumb {
+  position: relative;
+  display: block;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--clr-border);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--speed) var(--ease-out),
+              box-shadow var(--speed) var(--ease-out);
+}
+
+.gallery-thumb img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.gallery-thumb::after {
+  content: "View larger";
+  position: absolute;
+  right: var(--space-xs);
+  bottom: var(--space-xs);
+  padding: 0.2em 0.7em;
+  border-radius: var(--radius-sm);
+  background: rgba(16, 32, 22, 0.85);
+  color: #ffffff;
+  font-size: var(--fs-small);
+  opacity: 0;
+  transition: opacity var(--speed) var(--ease-out);
+}
+
+.gallery-thumb:hover,
+.gallery-thumb:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.gallery-thumb:hover::after,
+.gallery-thumb:focus-visible::after {
+  opacity: 1;
+}
+
+/* Native <dialog>: top layer, focus trap and Escape handled by the UA */
+dialog.lightbox {
+  width: min(92vw, 56rem);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-m);
+  background: var(--clr-surface);
+  color: var(--clr-text);
+  box-shadow: var(--shadow-lg);
+}
+
+dialog.lightbox::backdrop {
+  background: rgba(10, 14, 10, 0.75);
+}
+
+.lightbox-figure img {
+  width: 100%;
+  max-height: 65vh;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  background: var(--clr-surface-alt);
+}
+
+.lightbox-figure figcaption {
+  margin-top: var(--space-xs);
+  font-size: var(--fs-small);
+  font-style: italic;
+  color: var(--clr-muted);
+}
+
+.lightbox-count {
+  margin-block-start: var(--space-2xs);
+  text-align: center;
+  font-size: var(--fs-small);
+  color: var(--clr-muted);
+}
+
+/* FLEXBOX DECISION #4 — lightbox control bar: buttons row that wraps */
+.lightbox-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-xs);
+  margin-block-start: var(--space-s);
+}
+
+/* ---- Footer ---- */
+.site-footer {
+  background: var(--clr-brand-deep);
+  color: var(--clr-footer-ink);
+  padding-block: var(--space-xl);
+  font-size: var(--fs-small);
+}
+
+/*
+  CSS GRID DECISION #5 — .footer-grid: single centred column on mobile,
+  three aligned columns (contact / links / meta) on wide screens.
+*/
+.footer-grid {
+  display: grid;
+  gap: var(--space-m);
+  justify-items: center;
+  text-align: center;
+}
+
+.site-footer a {
+  color: var(--clr-footer-link);
+}
+
+.site-footer a:hover {
+  color: #ffffff;
+}
+
+/* FLEXBOX DECISION #5 — footer link row wraps gracefully */
+.footer-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-xs) var(--space-m);
+  list-style: none;
+}
+
+.footer-meta .to-top {
+  font-weight: var(--fw-mid);
+}
+
+.footer-meta small {
+  display: block;
+  margin-top: var(--space-xs);
+  opacity: 0.85;
+}
+
+/* --------------------------------------------------------------------------
+   06. UTILITIES
+   -------------------------------------------------------------------------- */
+.u-span-2 {
+  grid-column: 1 / -1;
+}
+
+/* Visually hidden, still announced by screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   07. MEDIA QUERIES — mobile-first, all min-width
+   -------------------------------------------------------------------------- */
+
+/* ===== TABLET: 40em (~640px) and up ===== */
+@media (min-width: 40em) {
+
+  /* Flexbox: brand | nav | controls on one line via order (see §05) */
+  .site-nav {
+    order: 2;
+    flex-basis: auto;
+    margin-left: auto;
+  }
+
+  .header-controls {
+    order: 3;
+  }
+
+  /* Restore the inline nav that JS collapses on mobile */
+  .js .site-nav { display: block; }
+  .js .site-nav.is-open ul,
+  .site-nav ul { flex-direction: row; align-items: center; }
+  .js .site-nav.is-open a { display: inline-block; }
+  .nav-toggle { display: none; }
+
+  /* Grid: name/email fields side by side; phone spans both (.u-span-2) */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-l);
+  }
+
+  /* Grid: card rows flow 2-up (tablet) → 3-up (desktop) automatically */
+  .card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--space-l);
+  }
+
+  .gallery-grid { gap: var(--space-l); }
+}
+
+/* ===== DESKTOP: 56em (~896px) and up ===== */
+@media (min-width: 56em) {
+
+  /* Grid: intro text (3fr) + photo (2fr); figure spans the text rows */
+  .media-split {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: start;
+  }
+
+  .media-split > h2 { grid-column: 1 / -1; }
+  .media-split > figure {
+    grid-column: 2;
+    grid-row: 2 / span 3;
+  }
+
+  /* Grid: footer — three aligned columns */
+  .footer-grid {
+    grid-template-columns: 1.2fr 1fr 1.2fr;
+    justify-items: start;
+    text-align: left;
+    gap: var(--space-xl);
+  }
+
+  .footer-nav ul { justify-content: flex-start; }
+}
+
+/* ===== WIDE: 72em (~1152px) and up ===== */
+@media (min-width: 72em) {
+
+  /* Grid: booking form (~58%) beside the hours/contact sidebar */
+  .contact-split {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   08. ACCESSIBILITY: FOCUS STATES & MOTION PREFERENCES
+   -------------------------------------------------------------------------- */
+
+/* :focus-visible rings appear for KEYBOARD focus only, 3px, offset, and
+   AA-contrast against the surface behind them (amber on green surfaces). */
+:focus-visible {
+  outline: 3px solid var(--clr-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-2xs);
+}
+
+.site-header :focus-visible,
+.site-footer :focus-visible,
+dialog.lightbox::backdrop + * :focus-visible {
+  outline-color: var(--clr-focus-on-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   09. DARK THEME — [data-theme="dark"]
+   Applied by js/main.js (stored choice → OS preference → light default).
+   Without JS the site stays light, which is a valid readable fallback.
+   Only the token values change here; components adapt automatically because
+   they consume var() — except the few overrides listed at the end.
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --clr-brand:         #2f7a4e;  /* fill — white text on it: 5.2:1 ✓  */
+  --clr-brand-deep:    #17402a;  /* header/footer deep fill           */
+  --clr-brand-tint:    #26382c;
+  --clr-heading:       #a9ddb9;  /* heading ink on dark: 10+ :1 ✓     */
+  --clr-link:          #8fd0a8;  /* link ink on dark: ~8.7:1 ✓        */
+  --clr-accent:        #e08b3d;
+  --clr-accent-ink:    #f0b183;
+  --clr-surface:       #24261f;
+  --clr-surface-alt:   #1b1d17;
+  --clr-zebra:         #2a2c24;
+  --clr-text:          #ecebe3;
+  --clr-muted:         #b6b5a8;  /* ~7:1 on surface ✓                 */
+  --clr-border:        #45463c;
+  --clr-border-strong: #7c7d6e;
+  --clr-danger:        #ff9d8a;  /* error ink on dark: ~7:1 ✓         */
+  --clr-danger-soft:   #3a2621;
+  --clr-focus:         #a9ddb9;
+  --clr-footer-ink:    #cfe0d4;
+  --clr-footer-link:   #bfe3cc;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 10px 26px rgba(0, 0, 0, 0.6);
+}
+
+/* Component-level dark tweaks (keep white text readable on green fills) */
+[data-theme="dark"] .site-nav a[aria-current="page"] {
+  background: var(--clr-surface);
+  color: var(--clr-heading);
+}

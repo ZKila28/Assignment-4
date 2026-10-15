@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home | Lae City Urban Youths Bike Workshop</title>
+  <meta name="description" content="The Lae City Urban Youths Bike Workshop is a volunteer-run space where local riders repair their own bikes, join hands-on maintenance courses and donate unwanted bicycles.">
+  <!-- ISO229 - Ziphilia Kila -->
+  <meta name="author" content="Ziphilia Kila">
+  <meta name="theme-color" content="#1f6f43">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+  <script src="js/gallery.js" defer></script>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header id="top" class="site-header">
+
+    <div class="container header-inner">
+      <p class="brand">
+        <a href="index.html">
+          <!-- Decorative inline SVG wheel: hidden from assistive tech -->
+          <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32"
+               aria-hidden="true" focusable="false">
+            <circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="2.5"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+            <path d="M16 3v26M3 16h26M7.2 7.2l17.6 17.6M24.8 7.2L7.2 24.8"
+                  stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          Lae City Urban Youths Bike Workshop
+        </a>
+      </p>
+
+      <div class="header-controls">
+        <button type="button" id="theme-toggle" class="icon-btn theme-toggle"
+                aria-label="Switch to dark theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M20 13A8 8 0 1 1 11 4a6.5 6.5 0 0 0 9 9z" fill="currentColor"/>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4" fill="currentColor"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <button type="button" id="nav-toggle" class="icon-btn nav-toggle"
+                aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+          <svg class="icon-menu" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <svg class="icon-close" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="services.html">Services &amp; Courses</a></li>
+          <li><a href="contact.html">Bookings &amp; Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page container">
+
+    <h1>Welcome to the Lae City Urban Youths <br>Bike Workshop</h1>
+    <p class="lead">A volunteer-run repair space at Eriku where local riders fix
+    their own bikes with expert help beside them, learn maintenance skills, and pass
+    unwanted bikes on to new owners.</p>
+
+    <section id="about" class="media-split">
+      <h2>Who we are</h2>
+      <p>Since 2019 we have started a friendly, fully equipped community workshop. Our volunteer mechanics help riders of
+      all ages and skill levels keep affordable transport on the road &mdash; and keep
+      repairable bikes out of landfill.</p>
+      <p>No experience is needed. You do the work on your own bike, and a volunteer guides
+      you through each step so you leave with the bike <em>and</em> the know-how.</p>
+      <figure>
+        <!--
+          TODO — responsive image set. Save FOUR files in images/:
+            workshop-benches-480.jpg (480 px) · workshop-benches.jpg (900 px) ·
+            workshop-benches-1400.jpg (1400 px)
+          If you only have ONE photo, delete srcset/sizes and keep the plain src.
+        -->
+        <img src="images/bikes.jpg"
+             sizes="(min-width: 56em) 30rem, calc(100vw - 2rem)"
+             alt="Two volunteers repairing bicycles at the workshop's repair stands"
+             width="900" height="600">
+        <figcaption>A Thursday evening session.</figcaption>
+      </figure>
+      <p>New here? <a href="#get-involved">Find out how to get involved</a>, or jump
+      straight to our <a href="services.html">services, courses and prices</a>.</p>
+    </section>
+
+    <!-- A3 CSS GRID — .card-grid (auto-fit + minmax) -->
+    <section id="what-we-do" class="card-grid">
+      <h2>What we do</h2>
+
+      <article class="card">
+        <h3>Open repair stands</h3>
+        <p>Book a work stand for a two-hour session and repair your bike yourself using our
+        tool wall, work stands and spare parts, with a volunteer mechanic on hand whenever
+        you get stuck.</p>
+      </article>
+
+      <article class="card">
+        <h3>Hands-on maintenance courses</h3>
+        <p>Short, practical courses for small groups &mdash; from your first puncture repair
+        to advanced wheel truing. See the <a href="services.html#courses">upcoming course
+        dates and prices</a>.</p>
+      </article>
+
+      <article class="card">
+        <h3>Bike recycling</h3>
+        <p>We accept donated bikes, refurbish them with volunteers, and sell them at low
+        cost or pass them on through local charities. Nothing usable goes to waste.</p>
+      </article>
+    </section>
+
+    <section id="first-visit" class="panel">
+      <h2>Your first visit</h2>
+      <ol>
+        <li>Book a repair stand or course on the <a href="contact.html">bookings page</a>.</li>
+        <li>Bring your bike, closed-in shoes, and any spare tubes or parts you already have.</li>
+        <li>Check in at the front counter &mdash; every first visit starts with a free five-point safety check.</li>
+        <li>Work on your bike with a volunteer mechanic alongside you, then pay on the day.</li>
+      </ol>
+      <h3>What to bring</h3>
+      <ul>
+        <li>Your bike (we can lend a school bike for course sessions)</li>
+        <li>Closed-in shoes &mdash; required for safety</li>
+        <li>Clothes you do not mind getting grubby</li>
+        <li>Any spare tubes, cables or parts you already own</li>
+      </ul>
+      <p>Riders under 16 are very welcome, but must bring a supervising adult.</p>
+    </section>
+
+    <section id="news">
+      <h2>From the workshop bench</h2>
+      <article class="panel panel--accent">
+        <h3>New wheel-truing jigs arrive, thanks to council grant</h3>
+        <p><time datetime="2025-05-02">2 May 2025</time> &mdash; Two new truing stands were
+        installed this week, funded by a Lae City  Council community grant. They are
+        available at every open session &mdash; just ask a volunteer when you check in.</p>
+      </article>
+    </section>
+
+    <section id="gallery">
+      <h2>Workshop in pictures</h2>
+      <p>A quick look around the benches, the course room and the recycling corner.
+      Select a photo to view it larger &mdash; keyboard users can move between photos
+      with the left and right arrow keys.</p>
+
+      <ul class="gallery-grid">
+        <li>
+          <a class="gallery-thumb" href="images/bikes.jpg"
+             data-caption="A Thursday evening session.">
+            <img src="images/bikes.jpg"
+                 alt="Two volunteers repairing bicycles at the workshop's repair stands"
+                 width="900" height="600" loading="lazy" decoding="async">
+            <span class="sr-only"> (view larger)</span>
+          </a>
+        </li>
+        <li>
+          <a class="gallery-thumb" href="images/participants.jpg"
+             data-caption="Checking brake alignment during the beginners' maintenance course.">
+            <img src="images/participants.jpg"
+                 alt="Participants in attendence during a beginners' course"
+                 width="900" height="600" loading="lazy" decoding="async">
+            <span class="sr-only"> (view larger)</span>
+          </a>
+        </li>
+        <li>
+          <a class="gallery-thumb" href="images/bikes2.jpg"
+             data-caption="Refurbished bikes lined up for the annual second-hand sale.">
+            <img src="images/bikes2.jpg"
+                 alt="Rows of refurbished second-hand bicycles waiting for new owners"
+                 width="900" height="600" loading="lazy" decoding="async">
+            <span class="sr-only"> (view larger)</span>
+          </a>
+        </li>
+        <li>
+          <a class="gallery-thumb" href="images/location.jpg"
+             data-caption="The green entrance and bike racks at Eriku.">
+            <img src="images/location.jpg"
+                 alt="The green entrance and sign of the community bike workshop at Eriku"
+                 width="900" height="600" loading="lazy" decoding="async">
+            <span class="sr-only"> (view larger)</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section id="get-involved" class="card-grid">
+      <h2>Get involved</h2>
+
+      <article class="card">
+        <h3>Volunteer with us</h3>
+        <p>We need mechanics, front-of-house helpers and course assistants. You do not need
+        to be an expert &mdash; if you can fix a puncture, we can find a role for you.
+        <a href="contact.html">Send us a message</a> to register your interest.</p>
+      </article>
+
+      <article class="card">
+        <h3>Donate a bike</h3>
+        <p>That bike rusting in the garage could be someone's ride to work or school.
+        Drop-offs run every Saturday morning &mdash; see
+        <a href="services.html#recycling">what we accept</a>.</p>
+      </article>
+
+      <article class="card">
+        <h3>Become a member</h3>
+        <p>Membership is K100 a year and gets you discounted sessions and courses, free
+        safety checks, and a say at our annual general meeting.</p>
+      </article>
+
+      <p>Planning to ride further afield?
+      <a href="https://www.bicyclenetwork.com.au/" target="_blank" rel="noopener">Bicycle
+      Network's riding resources</a> (opens in a new tab) have route maps and safety tips
+      for new riders.</p>
+    </section>
+
+  </main>
+
+  <!-- A4 lightbox: a native <dialog> gives us focus trapping, an Escape
+       handler and top-layer rendering without any focus-trap library. -->
+  <dialog id="lightbox" class="lightbox" aria-labelledby="lightbox-caption">
+    <div class="lightbox-inner">
+      <figure class="lightbox-figure">
+        <img id="lightbox-img" alt="">
+        <figcaption id="lightbox-caption"></figcaption>
+      </figure>
+      <p class="lightbox-count" id="lightbox-count"></p>
+      <div class="lightbox-bar">
+        <button type="button" class="btn btn--outline" id="lightbox-prev">&larr; Previous</button>
+        <button type="button" class="btn btn--outline" id="lightbox-next">Next &rarr;</button>
+        <button type="button" class="btn btn--primary" id="lightbox-close">Close</button>
+      </div>
+    </div>
+  </dialog>
+
+ <footer class="site-footer">
+    <div class="container footer-grid">
+      <address>
+      Lae Urban Youths Bike Workshop<br>
+      Eriku, Lae MP<br>
+      Email: <a href="mailto:hello@laeurbanyouthsbikeworkshop.org.pg">hello@laeurbanyouthsbikeworkshop.org.pg</a><br>
+      Phone: <a href="tel:+67571234567">(675) 71234567</a>
+      </address>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services &amp; Courses</a></li>
+          <li><a href="contact.html">Bookings &amp; Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-meta">
+        <p><a class="to-top" href="#top">Back to top &uarr;</a></p>
+        <p><small>&copy; 2025 Lae Urban Youths Bike Workshop. A volunteer community group &mdash;
+    this site was built for ISO229 web development assessment.</small></p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
